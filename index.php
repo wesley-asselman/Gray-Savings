@@ -2,8 +2,6 @@
 require_once 'classes/database.php';
 $db = new Database;
 
-$db->select("*","users");
-
 $page = "home";
 if (isset($_GET['page'])) {
     $page = $_GET['page'];

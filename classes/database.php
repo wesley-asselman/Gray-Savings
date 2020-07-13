@@ -12,7 +12,8 @@ class Database
     private function connection($db, $servername = "localhost", $username = "root", $password = "root")
     {
         $conn = "mysql:host=$servername;dbname=$db;charset=utf8";
-        return new PDO ($conn, $username, $password);
+        return new PDO ($conn, $username, $password, array(PDO::ATTR_ERRMODE => PDO::ERRMODE_EXCEPTION));
+
     }
 
     public function select($toSelect, $table) {
@@ -30,6 +31,35 @@ class Database
             ':arg' => $arg,
         ]);
         return $query;
+
+    }
+
+    public function insert($table, $toInsert, $placeholders, $variables)
+    {
+        $query_items = implode(",", $toInsert);
+        $query_placeholders = implode(",", $placeholders);
+        $test = $query_vars = implode(",", $variables);
+
+        var_dump($test); die();
+
+        $stmt = $this->dbh->prepare("INSERT INTO $table ( $query_items ) VALUES ( $query_placeholders) ");
+        $stmt->execute(array(
+            $query_placeholders => $query_vars,
+            ));
+
+
+        return $stmt;
+    }
+
+    public function addUser($name, $email, $password) {
+
+        $stmt = $this->dbh->prepare("INSERT INTO users (userName, userEmail, userPassword) VALUES (:userName, :userEmail, :userPassword)");
+        $stmt->execute(array(
+        ':userName' => $name,
+        ':userEmail' => $email,
+        ':userPassword' => $password
+        ));
+        return $stmt;
 
     }
 

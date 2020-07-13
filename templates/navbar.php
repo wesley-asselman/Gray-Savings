@@ -5,7 +5,7 @@ $navItems = [
 ];
 
 $navItemsRight = [
-  'register' => 'Registration',
+  'registeruser' => 'Registration',
   'login' => 'Login',
 ];
 ?>
@@ -29,6 +29,10 @@ $navItemsRight = [
         <?php
         if (isset($_SESSION["loggedinAdmin"]) or isset($_SESSION["loggedin"])) { ?>
         <?php echo $logoutbutton;
+        }else{
+          foreach($navItemsRight as $navRight => $navName){ ?>
+            <li><a href="index.php?page=<?php echo $navRight; ?>"><?php echo $navName; ?></a></li>
+          <?php }
         };
         ?>
       </ul>
