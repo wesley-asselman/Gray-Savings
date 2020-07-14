@@ -2,14 +2,34 @@ body {
     background-color: lightgray;
 }
 
+a{
+    color:gray;
+}
+
+.editglyph{
+    float:right;
+}
+
+.form-control{
+    max-width:95%;
+}
+
 .savingsitem{
     background-color: white;
     border-style: solid;
     border-color: gray;
     min-height: 200px;
+    margin-right: 8.3%;
+    margin-bottom: 2%;
+    overflow:hidden;
 }
 
-.savingsitem:hover{
+.savingslink{
+    background-color: white;
+    overflow:hidden;
+}
+
+.savingslink:hover{
     opacity: 50%;
 }
 
