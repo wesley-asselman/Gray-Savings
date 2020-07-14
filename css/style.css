@@ -12,3 +12,7 @@ body {
 .savingsitem:hover{
     opacity: 50%;
 }
+
+.noview{
+    display: none;
+}
