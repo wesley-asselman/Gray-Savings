@@ -34,6 +34,15 @@ class Database
 
     }
 
+    public function login($userEmail) {
+
+        $query = $this->dbh->prepare("SELECT userId, userName, userPassword, userEmail FROM users WHERE userEmail = :userEmail");
+        $query->execute([
+            ':userEmail' => $userEmail,
+        ]);
+        return $query;
+    }
+
     public function insert($table, $toInsert, $placeholders, $variables)
     {
         $query_items = implode(",", $toInsert);
@@ -57,7 +66,7 @@ class Database
         $stmt->execute(array(
         ':userName' => $name,
         ':userEmail' => $email,
-        ':userPassword' => $password
+        ':userPassword' => password_hash($password,  PASSWORD_DEFAULT),
         ));
         return $stmt;
 

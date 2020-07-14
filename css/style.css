@@ -1,1 +1,14 @@
-body {background-color: lightgray};
+body {
+    background-color: lightgray;
+}
+
+.savingsitem{
+    background-color: white;
+    border-style: solid;
+    border-color: gray;
+    min-height: 200px;
+}
+
+.savingsitem:hover{
+    opacity: 50%;
+}

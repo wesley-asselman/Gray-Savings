@@ -9,6 +9,6 @@ $password = htmlspecialchars($_POST['password']);
 
 // $db->addUser($name,$email,$password);
 
-$db->insert('users', array('userName, userEmail, userPassword'), array(':userName, :userEmail, :userPassword'), array('name, email, password'));
+$db->addUser($name, $email, $password);
 
 header("location: ../index.php?page=home");
