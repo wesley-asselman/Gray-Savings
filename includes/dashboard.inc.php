@@ -35,7 +35,9 @@
             <div class="glyphicon glyphicon-remove"><input type="submit" value="Delete" class="nobutton" onclick="return confirm('Are you sure you want to delete this item?')"></div>
         </form>
         <form method="post" action="index.php?page=single-product">
-            <img width="100%" height="250px" src="data:image/png;base64,<?= base64_encode( $result['productImg'] ) ?>"/>
+            <div class="savingsimagebox">
+                <img width="100%" src="data:image/png;base64,<?= base64_encode( $result['productImg'] ) ?>"/>
+            </div>
             <h2><?php echo ucfirst($result['productName']); ?></h2>
             <input type="hidden" id="productId" name="productId" value=<?php echo $result['productId'];?>>
             <input type="submit" value="View" class="col-sm-12 btn btn-default" style="margin-bottom:5px;">
