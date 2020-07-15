@@ -3,7 +3,7 @@
 ?>
 <H1> User Dashboard for <?php echo $_SESSION['userName']; ?></h1>
 
-<button class="btn btn-default off-white" onclick="myFunction()">Add new Savings plan</button>
+<button class="btn btn-default off-white" onclick="OpenClose()">Add new Savings plan</button>
 <div class="container noview" id="myDIV">
     <h2>Add plan</h2>
     <form action="php/addproduct.php" method="post" enctype="multipart/form-data">
@@ -14,6 +14,10 @@
         <div class="form-group">
             <label>Product Link</label>
             <input class="form-control" placeholder="Link" type="text" id="Link" name="link" required><Br>
+        </div>
+        <div class="form-group">
+            <label>Product Price</label>
+            <input class="form-control" placeholder="Price" type="text" id="price" name="price" required><Br>
         </div>
         <div class="form-group">
             <label>Product Image</label>
@@ -40,7 +44,7 @@
 <?php }; ?>
 
 <script>
-    function myFunction() {
+    function OpenClose() {
   var x = document.getElementById("myDIV");
   if (x.style.display === "none") {
     x.style.display = "block";

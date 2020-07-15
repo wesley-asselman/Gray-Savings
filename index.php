@@ -2,6 +2,7 @@
 session_start();
 require_once 'classes/database.php';
 require_once 'classes/templates.php';
+require 'classes/product.php';
 
 $db = new Database;
 $temps = new templates;

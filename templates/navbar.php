@@ -5,7 +5,9 @@ $navItems = [
 ];
 
 $navItemsLoggedin = [
+  'home' => 'Home',
   'dashboard' => 'User Dashboard',
+  'test' => 'Test Pagina',
 ];
 
 $navItemsRight = [

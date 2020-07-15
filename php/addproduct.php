@@ -6,6 +6,7 @@ $db = new Database;
 
 $name = htmlspecialchars($_POST['name']);
 $link = htmlspecialchars($_POST['link']);
+$price = htmlspecialchars($_POST['price']);
 
 if($_FILES['image']['tmp_name']==NULL)
 {
@@ -15,6 +16,6 @@ else{
 $image = file_get_contents($_FILES['image']['tmp_name']);
 }
 
-$db->addProduct($name, $link, $image, $_SESSION['userId']);
+$db->addProduct($name, $link, $image, $price, $_SESSION['userId']);
 
 header("location: ../index.php?page=dashboard");

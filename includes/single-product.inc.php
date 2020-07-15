@@ -2,9 +2,20 @@
     $prodId = $_POST['productId'];
     $query = $db->selectWhere('*', 'products', 'productId', $prodId);
 ?>
+<div style="min-height:260px">
 <?php foreach($query as $result){ ?>
+    <div class="col-sm-6">
+        <h2>Saving for:<br><br><?php echo ucfirst($result['productName']); ?></h2>
+    </div>
+    <div class="col-sm-3">
+        <h2>Total needed<br><br><?php echo number_format ($result['productPrice'], 2, ",", ".");?></h2>
+    </div>
+    <div class="col-sm-3 singleimage">
         <img width="100%" height="250px" src="data:image/png;base64,<?= base64_encode( $result['productImg'] ) ?>"/>
-        <h2>Saving for: <?php echo ucfirst($result['productName']); ?></h2>
-        <input type="hidden" value=<?php $result['productId']?>>
-        <input type="submit" value="View" class="col-sm-12 btn btn-default">
+    </div>
+    <div class="col-sm-7">
+
+    </div>
 <?php }; ?>
+</div>
+<hr>

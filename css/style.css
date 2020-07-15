@@ -51,3 +51,7 @@ a{
     font-family: Arial, Helvetica, sans-serif
     ;
 }
+
+.singleimage{
+    float:right;
+}

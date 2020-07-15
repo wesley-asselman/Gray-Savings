@@ -72,12 +72,13 @@ class Database
 
     }
 
-    public function addProduct($name, $link, $image, $userId) {
-        $stmt = $this->dbh->prepare("INSERT INTO products (productName, productImg, productLink, userId) VALUES (:productName, :productImg, :productLink, :userId)");
+    public function addProduct($name, $link, $image, $price, $userId) {
+        $stmt = $this->dbh->prepare("INSERT INTO products (productName, productImg, productLink, productPrice, userId) VALUES (:productName, :productImg, :productLink, :productPrice, :userId)");
         $stmt->execute(array(
         ':productName' => $name,
         ':productLink' => $link,
         ':productImg' => $image,
+        ':productPrice' => $price,
         ':userId' => $userId,
         ));
         return $stmt;
