@@ -83,4 +83,11 @@ class Database
         return $stmt;
     }
 
+    public function delete($table, $tableId, $Id){
+        $stmt = $this->dbh->prepare("DELETE FROM $table WHERE $tableId = :arg");
+        $stmt->execute(array(
+        ':arg' => $Id,
+        ));
+        return $stmt;
+    }
 }

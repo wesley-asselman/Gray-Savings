@@ -3,7 +3,7 @@
 ?>
 <H1> User Dashboard for <?php echo $_SESSION['userName']; ?></h1>
 
-<button class="btn btn-default" onclick="myFunction()">Add new Savings plan</button>
+<button class="btn btn-default off-white" onclick="myFunction()">Add new Savings plan</button>
 <div class="container noview" id="myDIV">
     <h2>Add plan</h2>
     <form action="php/addproduct.php" method="post" enctype="multipart/form-data">
@@ -19,21 +19,24 @@
             <label>Product Image</label>
             <input type="file" id="image" name="image"><br>
         </div>
-        <input type="submit" value="Submit" class="btn btn-default">
+        <input type="submit" value="Submit" class="off-white btn btn-default">
     </form>
 </div>
 <hr>
 <h2>My current savings plans</h2>
 <?php foreach($query as $result){ ?>
-    <form class="col-sm-3 savingsitem" method="post" action="index.php?page=single-product">
-        <div class="glyphicon glyphicon-remove">Delete</div>
-        <div class="glyphicon glyphicon-edit editglyph">Edit</div>
+    <div class="col-sm-3 savingsitem" method="post" action="index.php?page=single-product">
+        <form class="deleteglyph" method="post" action="php/deleteproduct.php">
+          <input type="hidden" id="productId" name="productId" value=<?php echo $result['productId'];?>>
+            <div class="glyphicon glyphicon-remove"><input type="submit" value="Delete" class="nobutton" onclick="return confirm('Are you sure you want to delete this item?')"></div>
+        </form>
+        <form method="post" action="index.php?page=single-product">
             <img width="100%" height="250px" src="data:image/png;base64,<?= base64_encode( $result['productImg'] ) ?>"/>
-            <?php echo $result['productId'] ?>
             <h2><?php echo ucfirst($result['productName']); ?></h2>
             <input type="hidden" id="productId" name="productId" value=<?php echo $result['productId'];?>>
-            <input type="submit" value="View" class="col-sm-12 btn btn-default">
+            <input type="submit" value="View" class="col-sm-12 btn btn-default" style="margin-bottom:5px;">
         </form>
+    </div>
 <?php }; ?>
 
 <script>

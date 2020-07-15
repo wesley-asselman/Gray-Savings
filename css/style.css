@@ -10,12 +10,20 @@ a{
     float:right;
 }
 
+.deleteglyph{
+    float:left;
+}
+
 .form-control{
     max-width:95%;
 }
 
+.off-white{
+    background-color: #f8f8f8;
+}
+
 .savingsitem{
-    background-color: white;
+    background-color: #f8f8f8;
     border-style: solid;
     border-color: gray;
     min-height: 200px;
@@ -25,7 +33,7 @@ a{
 }
 
 .savingslink{
-    background-color: white;
+    background-color: #f8f8f8;
     overflow:hidden;
 }
 
@@ -35,4 +43,11 @@ a{
 
 .noview{
     display: none;
+}
+
+.nobutton{
+    border-style: none;
+    background-color: #f8f8f8;
+    font-family: Arial, Helvetica, sans-serif
+    ;
 }
