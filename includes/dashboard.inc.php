@@ -32,7 +32,7 @@
     <div class="col-sm-3 savingsitem" method="post" action="index.php?page=single-product">
         <form class="deleteglyph" method="post" action="php/deleteproduct.php">
           <input type="hidden" id="productId" name="productId" value=<?php echo $result['productId'];?>>
-            <div class="glyphicon glyphicon-remove"><input type="submit" value="Delete" class="nobutton" onclick="return confirm('Are you sure you want to delete this item?')"></div>
+            <div class="glyphicon glyphicon-remove"><input type="submit" value="Delete" class="nobutton off-white" onclick="return confirm('Are you sure you want to delete this item?')"></div>
         </form>
         <form method="post" action="index.php?page=single-product">
             <div class="savingsimagebox">

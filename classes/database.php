@@ -91,4 +91,22 @@ class database
         ));
         return $stmt;
     }
+
+    public function addTransaction($amount, $productId) {
+        $stmt = $this->dbh->prepare("INSERT INTO transactions (amount, productId) VALUES (:amount, :productId)");
+        $stmt->execute(array(
+        ':amount' => $amount,
+        ':productId' => $productId,
+        ));
+        return $stmt;
+    }
+
+    public function sumTransaction($productId){
+        $query = $this->dbh->prepare("SELECT SUM(amount) AS amount FROM transactions WHERE productId = :productId");
+        $query->execute([
+            ':productId' => $productId,
+        ]);
+
+        return $query;
+    }
 }
