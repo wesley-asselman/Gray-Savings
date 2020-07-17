@@ -4,11 +4,11 @@
     }else{
         $prodId = $_SESSION['productId'];
     }
-    $query = $db->selectWhere('*', 'products', 'productId', $prodId);
-    $query2 = $db->selectWhere('*', 'transactions', 'productId', $prodId);
-    $query3 = $db->sumTransaction($prodId);
+    $query = $product->getProduct($prodId);
+    $query2 = $transaction->getTransaction($prodId);
+    $query3 = $transaction->sumTransaction($prodId);
     while($result = $query3->fetch(PDO::FETCH_ASSOC)){
-        $sum = $result['amount'];
+        $sum = $result['SUM(amount)'];
     };
 ?>
 <div style="min-height:260px">
@@ -24,7 +24,7 @@
     </div>
     <div class="col-sm-7">
         <?php if($sum >= $result['productPrice']){ ?>
-            <p> You have saved enough money! Click this <a href="<?php echo $result['productLink']; ?>">link</a> to buy your product!
+            <p> You have saved enough money! Click this <a href="<?php echo $result['productLink']; ?>">link</a> to buy: <?php echo $result['productName']; ?> !
             </p>
         <?php } ?>
     </div>
@@ -50,26 +50,26 @@
     </div>
 </div>
 <hr>
-    <table class="table">
+<table class="table">
+    <thead>
+        <th>Amounts</th>
+    </thead>
+    <tbody>
+        <?php foreach($query2 as $result){
+            if(isset($result['amount']))?>
+            <Tr>
+                <td><?php  echo "€ " . number_format($result['amount'], 2, ",", ".");; ?></td>
+                <td>
+                    <form method="post" action="php/deletetransaction.php">
+                        <input type="hidden" name="transactionId" value="<?php echo $result['transactionId']; ?>">
+                        <div class="glyphicon glyphicon-remove"><input type="submit" value="Delete" class="nobutton light-gray" onclick="return confirm('Are you sure you want to delete this item?')"></div>
+                    </form>
+                </td>
+            </Tr>
+        <?php }; ?>
         <thead>
-            <th>Amounts</th>
+            <th>Total saved</th>
+            <th> <?php echo "€ " . number_format($sum, 2, ",", "."); ?></th>
         </thead>
-        <tbody>
-            <?php foreach($query2 as $result){
-                if(isset($result['amount']))?>
-                <Tr>
-                    <td><?php  echo "€ " . number_format($result['amount'], 2, ",", ".");; ?></td>
-                    <td>
-                        <form method="post" action="php/deletetransaction.php">
-                            <input type="hidden" name="transactionId" value="<?php echo $result['transactionId']; ?>">
-                            <div class="glyphicon glyphicon-remove"><input type="submit" value="Delete" class="nobutton light-gray" onclick="return confirm('Are you sure you want to delete this item?')"></div>
-                        </form>
-                    </td>
-                </Tr>
-            <?php }; ?>
-            <thead>
-                <th>Total saved</th>
-                <th> <?php echo "€ " . number_format($sum, 2, ",", "."); ?></th>
-            </thead>
-        </tbody>
-    </table>
+    </tbody>
+</table>

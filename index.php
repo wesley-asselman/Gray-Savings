@@ -2,8 +2,11 @@
 session_start();
 require_once 'classes/autoload.php';
 
-$db = new Database;
+$db = new database;
 $temps = new templates;
+$product = new product($db);
+$user = new user($db);
+$transaction = new transaction($db);
 
 $page = "home";
 if (isset($_GET['page'])) {

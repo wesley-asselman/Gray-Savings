@@ -1,5 +1,5 @@
 <?php
-    $query = $db->selectWhere('*', 'products', 'userId', $_SESSION['userId'])
+    $query = $product->getProducts();
 ?>
 <H1> User Dashboard for <?php echo $_SESSION['userName']; ?></h1>
 

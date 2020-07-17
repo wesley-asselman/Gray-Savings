@@ -16,6 +16,8 @@ class database
 
     }
 
+    //generals
+
     public function select($toSelect, $table) {
 
         $query = $this->dbh->prepare("SELECT $toSelect FROM $table");
@@ -60,6 +62,16 @@ class database
         return $stmt;
     }
 
+    public function delete($table, $tableId, $Id){
+        $stmt = $this->dbh->prepare("DELETE FROM $table WHERE $tableId = :arg");
+        $stmt->execute(array(
+        ':arg' => $Id,
+        ));
+        return $stmt;
+    }
+
+    //adds
+
     public function addUser($name, $email, $password) {
 
         $stmt = $this->dbh->prepare("INSERT INTO users (userName, userEmail, userPassword) VALUES (:userName, :userEmail, :userPassword)");
@@ -84,14 +96,6 @@ class database
         return $stmt;
     }
 
-    public function delete($table, $tableId, $Id){
-        $stmt = $this->dbh->prepare("DELETE FROM $table WHERE $tableId = :arg");
-        $stmt->execute(array(
-        ':arg' => $Id,
-        ));
-        return $stmt;
-    }
-
     public function addTransaction($amount, $productId) {
         $stmt = $this->dbh->prepare("INSERT INTO transactions (amount, productId) VALUES (:amount, :productId)");
         $stmt->execute(array(
@@ -101,12 +105,4 @@ class database
         return $stmt;
     }
 
-    public function sumTransaction($productId){
-        $query = $this->dbh->prepare("SELECT SUM(amount) AS amount FROM transactions WHERE productId = :productId");
-        $query->execute([
-            ':productId' => $productId,
-        ]);
-
-        return $query;
-    }
 }
