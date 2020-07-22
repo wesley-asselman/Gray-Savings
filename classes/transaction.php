@@ -1,11 +1,8 @@
 <?php
 
 class Transaction{
-    private $db;
 
-    public function __construct(database $db){
-        $this->db = $db;
-      }
+    use Connectable;
 
     public function addTransaction(){
 
@@ -15,13 +12,18 @@ class Transaction{
 
     }
 
-    public function getTransaction($prodId){
-        $data = $this->db->selectWhere('*','transactions', 'productId', $prodId);
+    public function getTransactions($prodId){
+        $sql = "SELECT * FROM transactions WHERE productId = :productId";
+
+        $data = $this->dbh->pdo->prepare($sql);
+        $data->execute([
+            ':productId' => $prodId,
+        ]);
         return $data;
     }
 
     public function sumTransaction($prodId){
-        $query = $this->db->selectWhere("SUM(amount)", "transactions","productId",$prodId);
+        $query = $this->dbh->prepare("SUM(amount)", "transactions","productId",$prodId);
         return $query;
     }
 

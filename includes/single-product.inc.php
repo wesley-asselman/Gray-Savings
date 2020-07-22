@@ -1,42 +1,39 @@
 <?php
-    if(isset($_POST['productId'])){
-        $prodId = $_POST['productId'];
-    }else{
-        $prodId = $_SESSION['productId'];
-    }
-    $query = $product->getProduct($prodId);
-    $query2 = $transaction->getTransaction($prodId);
-    $query3 = $transaction->sumTransaction($prodId);
-    while($result = $query3->fetch(PDO::FETCH_ASSOC)){
-        $sum = $result['SUM(amount)'];
-    };
+if (isset($_POST['productId'])) {
+    $prodId = $_POST['productId'];
+} else {
+    $prodId = $_SESSION['productId'];
+}
+$query = $product->getSingle($prodId);
+$query2 = $transaction->getTransactions($prodId);
+
 ?>
 <div style="min-height:260px">
-<?php foreach($query as $result){ ?>
-    <div class="col-sm-6">
-        <h2>Saving for:<br><br><?php echo ucfirst($result['productName']); ?></h2>
-    </div>
-    <div class="col-sm-3">
-        <h2>Total needed<br><br><?php echo "€ " . number_format($result['productPrice'], 2, ",", ".");?></h2>
-    </div>
-    <div class="col-sm-3 singleimage">
-        <img width="100%" src="data:image/png;base64,<?= base64_encode( $result['productImg'] ) ?>"/>
-    </div>
-    <div class="col-sm-7">
-        <?php if($sum >= $result['productPrice']){ ?>
-            <p> You have saved enough money! Click this <a href="<?php echo $result['productLink']; ?>">link</a> to buy: <?php echo $result['productName']; ?> !
-            </p>
-        <?php } ?>
-    </div>
-<?php }; ?>
+    <?php foreach ($query as $result) { ?>
+        <div class="col-sm-6">
+            <h2>Saving for:<br><br><?php echo ucfirst($result['productName']); ?></h2>
+        </div>
+        <div class="col-sm-3">
+            <h2>Total needed<br><br><?php echo "€ " . number_format($result['productPrice'], 2, ",", "."); ?></h2>
+        </div>
+        <div class="col-sm-3 singleimage">
+            <img width="100%" src="<?= $result['productImg']  ?>" alt="Image didn't work!"/>
+        </div>
+        <div class="col-sm-7">
+            <?php if ($sum >= $result['productPrice']) { ?>
+                <p> You have saved enough money! Click this <a href="<?php echo $result['productLink']; ?>">link</a> to buy: <?php echo $result['productName']; ?> !
+                </p>
+            <?php } ?>
+        </div>
+    <?php }; ?>
 </div>
 <hr>
 <div style="min-height:130px">
     <div class="col-sm-6">
-        <h4>Add aaamount</h4>
+        <h4>Add amount</h4>
         <form class="form-group" method="post" action="php/transaction.php">
             <input type="hidden" name="productId" value="<?php echo $prodId; ?>">
-            <input class="form-control"  type="text" name="posamount">
+            <input class="form-control" type="text" name="posamount">
             <input type="submit" class="btn btn-default" value="Add amount">
         </form>
     </div>
@@ -55,10 +52,10 @@
         <th>Amounts</th>
     </thead>
     <tbody>
-        <?php foreach($query2 as $result){
-            if(isset($result['amount']))?>
+        <?php foreach ($query2 as $result) {
+            if (isset($result['amount'])) ?>
             <Tr>
-                <td><?php  echo "€ " . number_format($result['amount'], 2, ",", ".");; ?></td>
+                <td><?php echo "€ " . number_format($result['amount'], 2, ",", ".");; ?></td>
                 <td>
                     <form method="post" action="php/deletetransaction.php">
                         <input type="hidden" name="transactionId" value="<?php echo $result['transactionId']; ?>">

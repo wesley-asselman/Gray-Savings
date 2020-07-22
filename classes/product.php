@@ -9,6 +9,21 @@ class Product implements ResourceInterface
         $this->template->render('dashboard', ['products' => $this->getAll()]);
     }
 
+    public function getSingle($productId = null)
+    {
+        $sql = "SELECT * FROM products";
+        if ($productId) {
+            $sql .= " WHERE productId = :productId";
+        }
+
+        $stmt = $this->dbh->pdo->prepare($sql);
+        $stmt->execute([
+            ':productId' => $productId,
+        ]);
+        return $stmt;
+    }
+
+
     //
     public function getAll($user_id = null)
     {

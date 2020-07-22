@@ -8,10 +8,7 @@ if (!isset($_REQUEST['action'])) {
 
 $database = new Database();
 $request = new Request($_REQUEST);
-
 $location = new Location();
-$dashboard = $location->headerLoc('dashboard');
-$home = $location->headerLoc('home');
 
 $action = $request->get('action');
 $method = $_SERVER['REQUEST_METHOD'];
@@ -24,21 +21,28 @@ if ('products' === $action && 'GET' === $method) {
 if ('products' === $action && 'POST' === $method) {
     $product = new Product($database);
     $product->add($request);
-    $dashboard;
+    $location->dashBoard();
 }
 
 if ('deleteproduct' === $action && 'GET' === $method) {
     $product = new Product($database);
     $product->delete($request);
-    $dashboard;
+    $location->dashBoard();
 }
 
 if ('login' === $action && 'POST' === $method) {
     $user = new User($database);
-    $user->add($request);
+    $user->login($request);
+    $location->dashBoard();
 }
 
 if ('logout' === $action && 'POST' === $method) {
     session_destroy();
-    $home;
+    $location->home();
+}
+
+if ('register' === $action && 'POST' === $method) {
+    $user = new User($database);
+    $user->add($request);
+    $location->home();
 }
