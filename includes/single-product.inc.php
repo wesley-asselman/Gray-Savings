@@ -33,7 +33,7 @@
 <hr>
 <div style="min-height:130px">
     <div class="col-sm-6">
-        <h4>Add amount</h4>
+        <h4>Add aaamount</h4>
         <form class="form-group" method="post" action="php/transaction.php">
             <input type="hidden" name="productId" value="<?php echo $prodId; ?>">
             <input class="form-control"  type="text" name="posamount">

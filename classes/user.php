@@ -1,6 +1,6 @@
 <?php
 
-class user{
+class User{
     private $db;
 
     public function __construct(database $db){
@@ -9,7 +9,7 @@ class user{
 
     public function addUser($name, $email, $password) {
 
-    $stmt = $this->dbh->prepare("INSERT INTO users (userName, userEmail, userPassword) VALUES (:userName, :userEmail, :userPassword)");
+    $stmt = $this->dbh->pdo->prepare("INSERT INTO users (userName, userEmail, userPassword) VALUES (:userName, :userEmail, :userPassword)");
     $stmt->execute(array(
     ':userName' => $name,
     ':userEmail' => $email,

@@ -1,47 +1,84 @@
 <?php
 
-class product{
-    private $db;
+class Product implements ResourceInterface
+{
+    use Connectable;
 
-    public function __construct(database $db){
-        $this->db = $db;
-      }
+    public function index()
+    {
+        $this->template->render('dashboard', ['products' => $this->getAll()]);
+    }
 
-      public function addProduct($name, $link, $image, $price, $userId) {
-        $stmt = $this->dbh->prepare("INSERT INTO products (productName, productImg, productLink, productPrice, userId) VALUES (:productName, :productImg, :productLink, :productPrice, :userId)");
+    public function get($id)
+    {
+        // return product with id $id
+    }
+
+    public function getAll($user_id = null)
+    {
+        $sql = "SELECT * FROM products";
+        if ($user_id) {
+            $sql .= " WHERE userId = :userId";
+        }
+
+        $stmt = $this->dbh->pdo->prepare($sql);
+        $stmt->execute([
+            ':userId' => 9,
+        ]);
+        return $stmt;
+    }
+
+    public function delete($productId)
+    {
+        $stmt = $this->dbh->pdo->prepare("DELETE FROM products WHERE productId = :productId");
         $stmt->execute(array(
-        ':productName' => $name,
-        ':productLink' => $link,
-        ':productImg' => $image,
-        ':productPrice' => $price,
-        ':userId' => $userId,
+        ':productId' => $productId,
         ));
         return $stmt;
     }
 
-    public function deleteProduct(){
+    public function add($request)
+    {
+        $data = $request->validate(
+            [
+                'productName' => 'required',
+                'productImg' => 'required',
+                'productPrice' => 'required',
+                'productLink' => 'required',
+                'userId' => 'required',
+            ]
+        );
 
+        // $data = [
+        //     'name' => $request->get('name'),
+        //     'title' => $request->get('title'),
+        // ];
+
+        if (!$data) {
+            die('Errors!');
+        }
+
+        return $this->store($data);
     }
 
-    public function editProductLink(){
+    protected function store($data)
+    {
+        if (!$data) {
+            die('No data to store');
+        }
 
-    }
+        $pdo_data = [];
+        foreach ($data as $key => $value) {
+            $pdo_data[':' . $key] = $value;
+        }
 
-    public function editProductName(){
+        $sql = "INSERT INTO products (" . implode(', ', array_keys($data)) . ")";
+        $sql .= "VALUES (" . implode(', ', array_keys($pdo_data)) . ")";
 
-    }
 
-    public function editProductImage(){
+        $stmt = $this->dbh->pdo->prepare($sql);
+        $stmt->execute($pdo_data);
 
-    }
-
-    public function getProducts(){
-        $data = $this->db->selectWhere('*', 'products', 'userId', $_SESSION['userId']);
-        return $data;
-    }
-
-    public function getProduct($prodId){
-        $data = $this->db->selectWhere('*', 'products', 'productId', $prodId);
-        return $data;
+        return $stmt;
     }
 }

@@ -1,6 +1,6 @@
 <?php
 
-class transaction{
+class Transaction{
     private $db;
 
     public function __construct(database $db){

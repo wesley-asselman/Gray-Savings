@@ -3,7 +3,7 @@
 //includes relative to the index.php location.
 //might rebuild to a global relativity later.
 
-class templates{
+class Templates{
 
     public static function inc_Header(){
         require "templates/header.php";

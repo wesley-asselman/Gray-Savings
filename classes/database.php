@@ -1,108 +1,19 @@
 <?php
-class database
+class Database
 {
-    private $dbh;
+    public $pdo;
 
     public function __construct()
     {
 
-        $this->dbh = $this->connection('GSavings');
+        $this->pdo = $this->connection('GSavings');
 
     }
-    private function connection($db, $servername = "localhost", $username = "root", $password = "root")
+    private function connection($dbh, $servername = "localhost", $username = "root", $password = "root")
     {
-        $conn = "mysql:host=$servername;dbname=$db;charset=utf8";
+        $conn = "mysql:host=$servername;dbname=$dbh;charset=utf8";
         return new PDO ($conn, $username, $password, array(PDO::ATTR_ERRMODE => PDO::ERRMODE_EXCEPTION));
 
-    }
-
-    //generals
-
-    public function select($toSelect, $table) {
-
-        $query = $this->dbh->prepare("SELECT $toSelect FROM $table");
-        $query->execute();
-        return $query;
-
-    }
-
-    public function selectWhere($toSelect, $table, $where, $arg) {
-
-        $query = $this->dbh->prepare("SELECT $toSelect FROM $table WHERE $where = :arg");
-        $query->execute([
-            ':arg' => $arg,
-        ]);
-        return $query;
-
-    }
-
-    public function login($userEmail) {
-
-        $query = $this->dbh->prepare("SELECT userId, userName, userPassword, userEmail FROM users WHERE userEmail = :userEmail");
-        $query->execute([
-            ':userEmail' => $userEmail,
-        ]);
-        return $query;
-    }
-
-    public function insert($table, $toInsert, $placeholders, $variables)
-    {
-        $query_items = implode(",", $toInsert);
-        $query_placeholders = implode(",", $placeholders);
-        $test = $query_vars = implode(",", $variables);
-
-        var_dump($test); die();
-
-        $stmt = $this->dbh->prepare("INSERT INTO $table ( $query_items ) VALUES ( $query_placeholders) ");
-        $stmt->execute(array(
-            $query_placeholders => $query_vars,
-            ));
-
-
-        return $stmt;
-    }
-
-    public function delete($table, $tableId, $Id){
-        $stmt = $this->dbh->prepare("DELETE FROM $table WHERE $tableId = :arg");
-        $stmt->execute(array(
-        ':arg' => $Id,
-        ));
-        return $stmt;
-    }
-
-    //adds
-
-    public function addUser($name, $email, $password) {
-
-        $stmt = $this->dbh->prepare("INSERT INTO users (userName, userEmail, userPassword) VALUES (:userName, :userEmail, :userPassword)");
-        $stmt->execute(array(
-        ':userName' => $name,
-        ':userEmail' => $email,
-        ':userPassword' => password_hash($password,  PASSWORD_DEFAULT),
-        ));
-        return $stmt;
-
-    }
-
-    public function addProduct($name, $link, $image, $price, $userId) {
-        $stmt = $this->dbh->prepare("INSERT INTO products (productName, productImg, productLink, productPrice, userId) VALUES (:productName, :productImg, :productLink, :productPrice, :userId)");
-        $stmt->execute(array(
-        ':productName' => $name,
-        ':productLink' => $link,
-        ':productImg' => $image,
-        ':productPrice' => $price,
-        ':userId' => $userId,
-        ));
-        return $stmt;
-    }
-
-    public function addTransaction($amount, $productId) {
-        $stmt = $this->dbh->prepare("INSERT INTO transactions (amount, productId) VALUES (:amount, :productId)");
-        $stmt->execute(array(
-        ':amount' => $amount,
-        ':productId' => $productId,
-        ));
-        return $stmt;
     }
 
 }
