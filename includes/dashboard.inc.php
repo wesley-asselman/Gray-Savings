@@ -32,11 +32,13 @@
 <h2>My current savings plans</h2>
 <?php foreach($query as $result){ ?>
     <div class="col-sm-3 savingsitem" method="post" action="index.php?page=single-product">
-        <form class="deleteglyph" method="post" action="Routes.php">
-            <input type="hidden" name="action" value="delete">
-            <input type="hidden" id="productId" name="productId" value=<?php echo $result['productId'];?>>
-            <div class="glyphicon glyphicon-remove"><input type="submit" value="Delete" class="nobutton off-white" onclick="return confirm('Are you sure you want to delete this item?')"></div>
+        <!-- Deleteform -->
+        <form class="deleteglyph" method="get" action="Routes.php">
+            <input type="hidden" name="action" value="deleteproduct">
+            <input type="hidden" id="productid" name="productid" value=<?php echo $result['productId'];?>>
+            <div class="glyphicon glyphicon-remove"><input type="submit" value="delete" class="nobutton off-white" onclick="return confirm('Are you sure you want to delete this item?')"></div>
         </form>
+        <!--End Deleteform -->
         <form method="post" action="index.php?page=single-product">
             <div class="savingsimagebox">
                 <img width="100%" src="<?= ( $result['productImg'] ) ?>"/>

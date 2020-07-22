@@ -9,11 +9,7 @@ class Product implements ResourceInterface
         $this->template->render('dashboard', ['products' => $this->getAll()]);
     }
 
-    public function get($id)
-    {
-        // return product with id $id
-    }
-
+    //
     public function getAll($user_id = null)
     {
         $sql = "SELECT * FROM products";
@@ -23,17 +19,19 @@ class Product implements ResourceInterface
 
         $stmt = $this->dbh->pdo->prepare($sql);
         $stmt->execute([
-            ':userId' => 9,
+            ':userId' => $user_id,
         ]);
         return $stmt;
     }
 
-    public function delete($productId)
+    public function delete($request)
     {
-        $stmt = $this->dbh->pdo->prepare("DELETE FROM products WHERE productId = :productId");
-        $stmt->execute(array(
-        ':productId' => $productId,
-        ));
+        $sql = "DELETE FROM products WHERE productId = :productId";
+
+        $stmt = $this->dbh->pdo->prepare($sql);
+        $stmt->execute([
+        ':productId' => $request->get('productid'),
+        ]);
         return $stmt;
     }
 

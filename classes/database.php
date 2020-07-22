@@ -13,7 +13,6 @@ class Database
     {
         $conn = "mysql:host=$servername;dbname=$dbh;charset=utf8";
         return new PDO ($conn, $username, $password, array(PDO::ATTR_ERRMODE => PDO::ERRMODE_EXCEPTION));
-
     }
 
 }

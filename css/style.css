@@ -62,3 +62,15 @@ a{
 .savingsimagebox{
     min-height: 200px;
 }
+
+.logoutbutton{
+    color: #777;
+    line-height: 20px;
+    position: relative;
+    display: block;
+    padding: 14px 15px;
+}
+
+.logoutbutton:hover{
+    color:black;
+}
