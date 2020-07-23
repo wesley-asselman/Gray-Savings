@@ -8,7 +8,6 @@ if (!isset($_REQUEST['action'])) {
 
 $database = new Database();
 $request = new Request($_REQUEST);
-$location = new Location();
 
 $action = $request->get('action');
 $method = $_SERVER['REQUEST_METHOD'];
@@ -21,28 +20,39 @@ if ('products' === $action && 'GET' === $method) {
 if ('products' === $action && 'POST' === $method) {
     $product = new Product($database);
     $product->add($request);
-    $location->dashBoard();
+    ( new URL('dashboard'))->redirect();
 }
 
 if ('deleteproduct' === $action && 'GET' === $method) {
     $product = new Product($database);
     $product->delete($request);
-    $location->dashBoard();
+    ( new URL('dashboard'))->redirect();
 }
 
 if ('login' === $action && 'POST' === $method) {
     $user = new User($database);
     $user->login($request);
-    $location->dashBoard();
+    ( new URL('dashboard'))->redirect();
 }
 
 if ('logout' === $action && 'POST' === $method) {
     session_destroy();
-    $location->home();
+    ( new URL('home'))->redirect();
 }
 
 if ('register' === $action && 'POST' === $method) {
     $user = new User($database);
     $user->add($request);
-    $location->home();
+    ( new URL('home'))->redirect();
+}
+
+if('transaction'=== $action && 'POST' === $method) {
+    $transaction = new Transaction($database);
+    $transaction->add($request);
+    ( new URL('single-product'))->redirect();
+}
+if('deletetransaction'=== $action && 'POST' === $method) {
+    $transaction = new Transaction($database);
+    $transaction->delete($request);
+    ( new URL('single-product'))->redirect();
 }

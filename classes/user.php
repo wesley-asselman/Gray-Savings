@@ -26,8 +26,6 @@ class User{
 
         $_SESSION["loggedin"] = NULL;
         foreach($query as $result){
-            echo $result['userName'];
-
                if ($request->get('userEmail') == $result["userEmail"] && $request->get('userPassword') == password_verify($request->get('userPassword'), $result["userPassword"])){
                    $_SESSION["loggedin"] = "Welcome " . ucfirst($result["userName"]);
                    $_SESSION["userId"] = $result['userId'];

@@ -4,12 +4,38 @@ class Transaction{
 
     use Connectable;
 
-    public function addTransaction(){
+    public function add($request){
+        $sql = "INSERT INTO transactions (amount, productId) VALUES (:amount, :productId)";
+        if ($request->get('posamount')){
+            $amount = $request->get('posamount');
+        }
+
+        if ($request->get('negamount')){
+            $amount =  "-". $request->get('negamount');
+        }
+
+        $amount = str_replace(",", ".", $amount);
+
+        $data = $this->dbh->pdo->prepare($sql);
+        $data->execute([
+            ':amount' => $amount,
+            ':productId' => $request->get('productId')
+        ]);
+
+        $_SESSION['productId'] = $request->get('productId');
+        return $data;
 
     }
 
-    public function deleteTransaction(){
+    public function delete($request){
+        $sql = "DELETE FROM transactions WHERE transactionId = :transactionId";
+        $_SESSION['productId'] = $request->get('productId');
 
+        $stmt = $this->dbh->pdo->prepare($sql);
+        $stmt->execute([
+        ':transactionId' => $request->get('transactionId'),
+        ]);
+        return $stmt;
     }
 
     public function getTransactions($prodId){
@@ -23,8 +49,17 @@ class Transaction{
     }
 
     public function sumTransaction($prodId){
-        $query = $this->dbh->prepare("SUM(amount)", "transactions","productId",$prodId);
-        return $query;
+        $sql = "SELECT SUM(amount) FROM transactions WHERE productId = :productId";
+
+        $data = $this->dbh->pdo->prepare($sql);
+        $data->execute([
+            ':productId' => $prodId,
+        ]);
+
+        while($result = $data->fetch(PDO::FETCH_ASSOC)){
+            $total = $result['SUM(amount)'];
+        }
+        return $total;
     }
 
 }
