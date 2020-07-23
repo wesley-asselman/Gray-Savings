@@ -4,17 +4,6 @@ class User{
 
     use Connectable;
 
-    public function addUser($name, $email, $password) {
-
-    $stmt = $this->dbh->pdo->prepare("INSERT INTO users (userName, userEmail, userPassword) VALUES (:userName, :userEmail, :userPassword)");
-    $stmt->execute(array(
-    ':userName' => $name,
-    ':userEmail' => $email,
-    ':userPassword' => password_hash($password,  PASSWORD_DEFAULT),
-    ));
-    return $stmt;
-    }
-
     public function login($request) {
         $sql = "SELECT * FROM users";
         $sql .= " WHERE userEmail = :userEmail";
@@ -79,6 +68,21 @@ class User{
 
         $stmt = $this->dbh->pdo->prepare($sql);
         $stmt->execute($pdo_data);
+
+        return $stmt;
+    }
+
+    public function editname($request){
+
+        $sql = "UPDATE users SET userName = :userName WHERE userId = :userId";
+
+        $stmt = $this->dbh->pdo->prepare($sql);
+        $stmt->execute([
+            ':userName' => $request->get('userName'),
+            ':userId' => $_SESSION['userId']
+        ]);
+
+        $_SESSION['userName'] = $request->get('userName');
 
         return $stmt;
     }

@@ -13,8 +13,8 @@ if (isset($_GET['page'])) {
     $page = $_GET['page'];
 }
 
-$temps->inc_Header();
-$temps->inc_Navbar();
+$temps->incHeader();
+$temps->incNavbar();
 
 if (file_exists('includes/' . $page . '.inc.php')) :
     include 'includes/' . $page . '.inc.php';
@@ -22,16 +22,29 @@ else :
     include "includes/404.inc.php";
 endif;
 
-$temps->inc_Footer();
+$temps->incFooter();
 ?>
 
 <script>
-    function OpenClose() {
-  var x = document.getElementById("myDIV");
-  if (x.style.display === "block") {
-    x.style.display = "none";
-  } else {
-    x.style.display = "block";
+    function OpenPlan() {
+      var y = document.getElementById("options");
+      var x = document.getElementById("plan");
+      if (x.style.display === "block") {
+        x.style.display = "none";
+      } else {
+        x.style.display = "block";
+        y.style.display = "none";
+      }
+    }
+
+  function OpenOptions() {
+    var y = document.getElementById("options");
+    var x = document.getElementById("plan");
+    if (y.style.display === "block") {
+      y.style.display = "none";
+    } else {
+      y.style.display = "block";
+      x.style.display = "none"
+    }
   }
-}
 </script>

@@ -62,6 +62,7 @@ a{
 .savingsimagebox{
     min-height: 200px;
     max-height: 200px;
+    overflow: hidden;
 }
 
 .logoutbutton{
@@ -74,4 +75,9 @@ a{
 
 .logoutbutton:hover{
     color:black;
+}
+
+.sideline{
+    border-left-style: groove;
+    border-right: darkgray;
 }

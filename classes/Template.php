@@ -5,16 +5,24 @@
 
 class Template{
 
-    public static function inc_Header(){
+    public static function incHeader(){
         require "templates/header.php";
     }
 
-    public static function inc_Footer(){
+    public static function incFooter(){
         require "templates/footer.php";
     }
 
-    public static function inc_Navbar(){
+    public static function incNavbar(){
         require "templates/navbar.php";
+    }
+
+    public static function incOptions(){
+        require "templates/options.php";
+    }
+
+    public static function incAddPlan(){
+        require "templates/addplan.php";
     }
 
 }

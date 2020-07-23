@@ -80,6 +80,8 @@ class Product implements ResourceInterface
             die('No data to store');
         }
 
+        $data['productPrice'] = str_replace(",", ".", $data['productPrice']);
+
         $pdo_data = [];
         foreach ($data as $key => $value) {
             $pdo_data[':' . $key] = $value;

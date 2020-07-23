@@ -51,8 +51,15 @@ if('transaction'=== $action && 'POST' === $method) {
     $transaction->add($request);
     ( new URL('single-product'))->redirect();
 }
+
 if('deletetransaction'=== $action && 'POST' === $method) {
     $transaction = new Transaction($database);
     $transaction->delete($request);
     ( new URL('single-product'))->redirect();
+}
+
+if('editname'=== $action && 'POST' === $method) {
+    $user = new User($database);
+    $user->editname($request);
+    ( new URL('dashboard'))->redirect();
 }

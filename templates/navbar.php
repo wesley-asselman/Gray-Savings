@@ -49,7 +49,7 @@ $navItemsRight = [
     <ul class="nav navbar-nav navbar-right">
       <?php
       if (isset($_SESSION["loggedin"])) { ?>
-        <li><a><?php echo $_SESSION["loggedin"]; ?></a></li>
+        <li><a><?php echo "Welcome " . $_SESSION["userName"] ; ?></a></li>
         <li>
           <form action="Routes.php" method="POST">
             <input type="hidden" name="action" value="logout">
