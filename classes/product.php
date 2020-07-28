@@ -23,8 +23,6 @@ class Product implements ResourceInterface
         return $stmt;
     }
 
-
-    //
     public function getAll($user_id = null)
     {
         $sql = "SELECT * FROM products";

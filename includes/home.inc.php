@@ -1,7 +1,5 @@
 <h1>Homepage</h1>
-
-<button class="btn btn-default off-white" onclick="OpenClose()">FizzBuzz test</button>
-<div class="container noview off-white" id="myDIV">
+<div class="container off-white">
     <?php
         $i = 1;
 

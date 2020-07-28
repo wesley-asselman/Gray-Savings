@@ -1,15 +1,15 @@
 <?php
-    $query = $product->getAll($_SESSION['userId']);
+    $query = $product->getAll($data['id']);
 ?>
-<H1> User Dashboard for <?php echo $_SESSION['userName']; ?></h1>
+<H1> User Dashboard for <?php echo $data['name'] ?></h1>
 
 <button class="btn btn-default off-white" onclick="OpenPlan()">Add new Savings plan</button>
 <button class="btn btn-default off-white" onclick="OpenOptions()">User Options</button>
 <div class="container noview" id="plan">
-    <?php $temps->incAddPlan(); ?>
+    <?php $template->incAddPlan(); ?>
 </div>
 <div class="container noview" id="options">
-    <?php $temps->incOptions(); ?>
+    <?php require "templates/options.php" ?>
 </div>
 <hr>
 <h2>My current savings plans</h2>

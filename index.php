@@ -1,20 +1,30 @@
 <?php
-session_start();
+
 require_once 'classes/autoload.php';
 
+session_start();
+
+if(isset($_COOKIE['appstate'])){
+  $data = unserialize($_COOKIE['appstate'], ["allowed_classes" => false]);
+}
+
 $db = new Database;
-$temps = new Template;
+$template = new Template;
 $product = new Product($db);
 $user = new User($db);
 $transaction = new Transaction($db);
+$cookie = new ReadCookie;
+$cookiedata = $cookie->read();
+
+$template->incHeader();
 
 $page = "home";
 if (isset($_GET['page'])) {
     $page = $_GET['page'];
 }
 
-$temps->incHeader();
-$temps->incNavbar();
+
+$template->incNavbar();
 
 if (file_exists('includes/' . $page . '.inc.php')) :
     include 'includes/' . $page . '.inc.php';
@@ -22,7 +32,7 @@ else :
     include "includes/404.inc.php";
 endif;
 
-$temps->incFooter();
+$template->incFooter();
 ?>
 
 <script>

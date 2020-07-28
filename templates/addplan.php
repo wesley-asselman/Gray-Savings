@@ -1,7 +1,7 @@
 <h3>Add plan</h3>
     <form action="Routes.php" method="post">
     <input type="hidden" value="products" name="action">
-    <input type="hidden" value="<?php echo $_SESSION['userId']; ?>" name="userId">
+    <input type="hidden" value="<?php echo $data['id']?>" name="userId">
         <div class="form-group">
             <label>Product Name</label>
             <input class="form-control" placeholder="Name" type="text" id="productName" name="productName" required><br>

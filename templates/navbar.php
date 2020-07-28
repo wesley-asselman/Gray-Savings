@@ -15,7 +15,13 @@ $navItemsRight = [
   'login' => 'Login',
 ];
 
+if(isset($_COOKIE['appstate'])){
+  $data = unserialize($_COOKIE['appstate'], ["allowed_classes" => false]);
+}
+
+
 ?>
+
 
 <nav class="navbar navbar-default">
   <div class="container-fluid">
@@ -25,7 +31,7 @@ $navItemsRight = [
     </div>
 
     <ul class="nav navbar-nav">
-      <?php if (isset($_SESSION["loggedin"])) {
+      <?php if (isset($_COOKIE["appstate"])) {
         foreach ($navItemsLoggedin as $navItem => $navName) :
       ?>
           <?PHP if (!$navItem) {
@@ -48,8 +54,8 @@ $navItemsRight = [
 
     <ul class="nav navbar-nav navbar-right">
       <?php
-      if (isset($_SESSION["loggedin"])) { ?>
-        <li><a><?php echo "Welcome " . $_SESSION["userName"] ; ?></a></li>
+      if (isset($_COOKIE["appstate"])) { ?>
+        <li><a><?php echo "Welcome " . $data['name'] ?></a></li>
         <li>
           <form action="Routes.php" method="POST">
             <input type="hidden" name="action" value="logout">

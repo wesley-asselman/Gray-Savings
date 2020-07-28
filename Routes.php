@@ -1,7 +1,10 @@
 <?php
-session_start();
-require_once 'classes/autoload.php';
 
+require_once 'classes/autoload.php';
+session_start();
+if(isset($_COOKIE['appstate'])){
+    $data = unserialize($_COOKIE['appstate'], ["allowed_classes" => false]);
+  }
 if (!isset($_REQUEST['action'])) {
     die('Geen action!!!');
 }
@@ -31,12 +34,12 @@ if ('deleteproduct' === $action && 'GET' === $method) {
 
 if ('login' === $action && 'POST' === $method) {
     $user = new User($database);
-    $user->login($request);
-    ( new URL('dashboard'))->redirect();
+    $user->loginCookie($request);
+    // ( new URL('dashboard'))->redirect();
 }
 
 if ('logout' === $action && 'POST' === $method) {
-    session_destroy();
+    setcookie("appstate", "", time() - (86400), "/");
     ( new URL('home'))->redirect();
 }
 

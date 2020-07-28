@@ -4,6 +4,7 @@ if (isset($_POST['productId'])) {
 } else {
     $prodId = $_SESSION['productId'];
 }
+
 $query = $product->getSingle($prodId);
 $query2 = $transaction->getTransactions($prodId);
 $total = $transaction->sumTransaction($prodId);

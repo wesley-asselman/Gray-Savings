@@ -4,6 +4,9 @@ class User{
 
     use Connectable;
 
+
+
+
     public function login($request) {
         $sql = "SELECT * FROM users";
         $sql .= " WHERE userEmail = :userEmail";
@@ -14,18 +17,45 @@ class User{
         ]);
 
         $_SESSION["loggedin"] = NULL;
-        foreach($query as $result){
+        while($result = $query->fetch(PDO::FETCH_ASSOC)){
                if ($request->get('userEmail') == $result["userEmail"] && $request->get('userPassword') == password_verify($request->get('userPassword'), $result["userPassword"])){
                    $_SESSION["loggedin"] = "Welcome " . ucfirst($result["userName"]);
                    $_SESSION["userId"] = $result['userId'];
                    $_SESSION["userName"] = $result['userName'];
-                   header('location: index.php?page=home');
+                   header('location: index.php?page=dashboard');
                 }else{
                     $_SESSION["loggedin"] = NULL;
                     die(header('location: index.php?page=home'));
+
             }
         }
     }
+
+    public function loginCookie($request) {
+        $sql = "SELECT * FROM users";
+        $sql .= " WHERE userEmail = :userEmail";
+
+        $query = $this->dbh->pdo->prepare($sql);
+        $query->execute([
+            ':userEmail' => $request->get('userEmail'),
+        ]);
+
+        while($result = $query->fetch(PDO::FETCH_ASSOC)){
+        if ($request->get('userEmail') == $result["userEmail"] && $request->get('userPassword') == password_verify($request->get('userPassword'), $result["userPassword"])){
+            $userId = $result["userId"];
+            $userName = $result['userName'];
+            $user = array(
+                "id" => $userId,
+                "name" => $userName
+            );
+            setcookie("appstate", serialize($user), time() + (86400), "/");
+            header('location: index.php?page=dashboard');
+         }else{
+             die(header('location: index.php?page=home'));
+         }
+     }
+ }
+
 
     public function add($request)
     {
@@ -74,12 +104,13 @@ class User{
 
     public function editname($request){
 
+        $data = unserialize($_COOKIE['appstate'], ["allowed_classes" => false]);
         $sql = "UPDATE users SET userName = :userName WHERE userId = :userId";
 
         $stmt = $this->dbh->pdo->prepare($sql);
         $stmt->execute([
             ':userName' => $request->get('userName'),
-            ':userId' => $_SESSION['userId']
+            ':userId' => $data['id']
         ]);
 
         $_SESSION['userName'] = $request->get('userName');
