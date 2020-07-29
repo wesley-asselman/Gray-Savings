@@ -1,7 +1,6 @@
 <?php
-    if(isset($_COOKIE['appstate'])){
-    $data = unserialize($_COOKIE['appstate'], ["allowed_classes" => false]);
-    }
+    $cookie = new ReadCookie;
+    $cookiedata = $cookie->read();
 ?>
 <h3>User Options</h3>
 <div>
@@ -13,6 +12,7 @@
             <input type="hidden" name="action" value="editname">
             <div class="form-group">
                 <label>Name</label>
+                <input type="hidden" name="userId" value="<?php echo $cookiedata['id'] ?>">
                 <input class="form-control" placeholder="Name" type="text" id="userName" name="userName" value="<?php echo $cookiedata['name'];?>" required><br>
             </div>
             <input type="submit" value="Edit" class="btn btn-default">

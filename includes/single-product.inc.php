@@ -1,14 +1,13 @@
 <?php
-if (isset($_POST['productId'])) {
-    $prodId = $_POST['productId'];
-} else {
-    $prodId = $_SESSION['productId'];
+if (!isset($_GET['productId'])) {
+    header("location: index.php?page=home");
+}else{
+    $prodId = $_GET['productId'];
 }
 
 $query = $product->getSingle($prodId);
 $query2 = $transaction->getTransactions($prodId);
 $total = $transaction->sumTransaction($prodId);
-
 
 ?>
 <div style="min-height:260px">
@@ -34,7 +33,7 @@ $total = $transaction->sumTransaction($prodId);
 <div style="min-height:130px">
     <div class="col-sm-6">
         <h4>Add amount</h4>
-        <form class="form-group" method="post" action="Routes.php">
+        <form class="form-group" method="get" action="Routes.php">
             <input type="hidden" name="action" value="transaction">
             <input type="hidden" name="productId" value="<?php echo $prodId; ?>">
             <input class="form-control" type="text" name="posamount">
@@ -43,7 +42,7 @@ $total = $transaction->sumTransaction($prodId);
     </div>
     <div class="col-sm-6">
         <h4>Remove amount</h4>
-        <form class="form-group" method="post" action="Routes.php">
+        <form class="form-group" method="get" action="Routes.php">
             <input type="hidden" name="action" value="transaction">
             <input type="hidden" name="productId" value="<?php echo $prodId; ?>">
             <input class="form-control" type="text" name="negamount">
@@ -62,7 +61,7 @@ $total = $transaction->sumTransaction($prodId);
             <Tr>
                 <td><?php echo "€ " . number_format($result['amount'], 2, ",", ".");; ?></td>
                 <td>
-                    <form method="post" action="Routes.php">
+                    <form method="get" action="Routes.php">
                         <input type="hidden" name="action" value="deletetransaction" >
                         <input type="hidden" name="productId" value="<?php echo $prodId; ?>">
                         <input type="hidden" name="transactionId" value="<?php echo $result['transactionId']; ?>">

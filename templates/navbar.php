@@ -15,9 +15,8 @@ $navItemsRight = [
   'login' => 'Login',
 ];
 
-if(isset($_COOKIE['appstate'])){
-  $data = unserialize($_COOKIE['appstate'], ["allowed_classes" => false]);
-}
+$cookie = new ReadCookie;
+$cookiedata = $cookie->read();
 
 
 ?>
@@ -55,7 +54,7 @@ if(isset($_COOKIE['appstate'])){
     <ul class="nav navbar-nav navbar-right">
       <?php
       if (isset($_COOKIE["appstate"])) { ?>
-        <li><a><?php echo "Welcome " . $data['name'] ?></a></li>
+        <li><a><?php echo "Welcome " . $cookiedata['name'] ?></a></li>
         <li>
           <form action="Routes.php" method="POST">
             <input type="hidden" name="action" value="logout">

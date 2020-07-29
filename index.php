@@ -2,12 +2,6 @@
 
 require_once 'classes/autoload.php';
 
-session_start();
-
-if(isset($_COOKIE['appstate'])){
-  $data = unserialize($_COOKIE['appstate'], ["allowed_classes" => false]);
-}
-
 $db = new Database;
 $template = new Template;
 $product = new Product($db);

@@ -1,10 +1,11 @@
 <?php
 
 require_once 'classes/autoload.php';
-session_start();
+
 if(isset($_COOKIE['appstate'])){
     $data = unserialize($_COOKIE['appstate'], ["allowed_classes" => false]);
   }
+
 if (!isset($_REQUEST['action'])) {
     die('Geen action!!!');
 }
@@ -49,16 +50,16 @@ if ('register' === $action && 'POST' === $method) {
     ( new URL('home'))->redirect();
 }
 
-if('transaction'=== $action && 'POST' === $method) {
+if('transaction'=== $action && 'GET' === $method) {
     $transaction = new Transaction($database);
     $transaction->add($request);
-    ( new URL('single-product'))->redirect();
+    ( new URL('single-product', ['productId' => $_GET['productId']]))->redirect();
 }
 
-if('deletetransaction'=== $action && 'POST' === $method) {
+if('deletetransaction'=== $action && 'GET' === $method) {
     $transaction = new Transaction($database);
     $transaction->delete($request);
-    ( new URL('single-product'))->redirect();
+    ( new URL('single-product', ['productId' => $_GET['productId']]))->redirect();
 }
 
 if('editname'=== $action && 'POST' === $method) {

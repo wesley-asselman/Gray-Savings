@@ -1,5 +1,4 @@
 <!DOCTYPE HTML>
-
     <html>
         <head>
             <!-- Latest compiled and minified CSS -->

@@ -1,7 +1,7 @@
 <?php
-    $query = $product->getAll($data['id']);
+    $query = $product->getAll($cookiedata['id']);
 ?>
-<H1> User Dashboard for <?php echo $data['name'] ?></h1>
+<H1> User Dashboard for <?php echo $cookiedata['name'] ?></h1>
 
 <button class="btn btn-default off-white" onclick="OpenPlan()">Add new Savings plan</button>
 <button class="btn btn-default off-white" onclick="OpenOptions()">User Options</button>
@@ -22,12 +22,13 @@
             <div class="glyphicon glyphicon-remove"><input type="submit" value="delete" class="nobutton off-white" onclick="return confirm('Are you sure you want to delete this item?')"></div>
         </form>
         <!--End Deleteform --><br>
-        <form method="post" action="index.php?page=single-product">
+        <form method="get" action="index.php?page=single-product">
             <div class="savingsimagebox">
                 <img width="100%" src="<?= ( $result['productImg'] ) ?>"/>
             </div>
             <h2><?php echo ucfirst($result['productName']); ?></h2>
             <p><?php echo "€ " . number_format($result['productPrice'], 2, ",", ".");?></p>
+            <input type="hidden" id="page" name="page" value="single-product">
             <input type="hidden" id="productId" name="productId" value=<?php echo $result['productId'];?>>
             <input type="submit" value="View" class="col-sm-12 btn btn-default" style="margin-bottom:5px;">
         </form>

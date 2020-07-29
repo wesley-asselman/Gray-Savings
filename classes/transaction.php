@@ -22,19 +22,17 @@ class Transaction{
             ':productId' => $request->get('productId')
         ]);
 
-        $_SESSION['productId'] = $request->get('productId');
         return $data;
-
     }
 
     public function delete($request){
         $sql = "DELETE FROM transactions WHERE transactionId = :transactionId";
-        $_SESSION['productId'] = $request->get('productId');
 
         $stmt = $this->dbh->pdo->prepare($sql);
         $stmt->execute([
         ':transactionId' => $request->get('transactionId'),
         ]);
+
         return $stmt;
     }
 
