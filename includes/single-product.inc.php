@@ -9,9 +9,12 @@ $query = $product->getSingle($prodId);
 $query2 = $transaction->getTransactions($prodId);
 $total = $transaction->sumTransaction($prodId);
 
+
 ?>
 <div style="min-height:260px">
-    <?php foreach ($query as $result) { ?>
+    <?php foreach ($query as $result) {
+        $totalneeded = $result['productPrice'] - $total
+        ?>
         <div class="col-sm-6">
             <h2>Saving for:<br><br><?php echo ucfirst($result['productName']); ?></h2>
         </div>
@@ -23,8 +26,10 @@ $total = $transaction->sumTransaction($prodId);
         </div>
         <div class="col-sm-7">
             <?php if ($total >= $result['productPrice']) { ?>
-                <p> You have saved enough money! Click this <a href="<?php echo $result['productLink']; ?>">link</a> to buy: <?php echo $result['productName']; ?> !
+                <p> You have saved enough money! Click this <a href="<?php echo $result['productLink']; ?>">link</a> to buy: <?php echo $result['productName']; ?>!
                 </p>
+            <?php }else{ ?>
+            <p> You still need: <?php echo "€ " . number_format($totalneeded, 2, ",", "."); ?></p>
             <?php } ?>
         </div>
     <?php }; ?>
