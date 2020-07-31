@@ -17,8 +17,6 @@ $navItemsRight = [
 
 $cookie = new ReadCookie;
 $cookiedata = $cookie->read();
-
-
 ?>
 
 

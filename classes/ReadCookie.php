@@ -4,8 +4,8 @@ class ReadCookie{
 
     public function read($cookiename = 'appstate'){
 
-        if(isset($_COOKIE['appstate'])){
-            $data = unserialize($_COOKIE['appstate'], ["allowed_classes" => false]);
+        if(isset($_COOKIE[$cookiename])){
+            $data = unserialize($_COOKIE[$cookiename]);
             return $data;
         }
     }

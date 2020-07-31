@@ -5,6 +5,12 @@
 
 class Template{
 
+    public function __construct()
+    {
+        $read = new ReadCookie();
+        $read->read();
+    }
+
     public static function incHeader(){
         require "templates/header.php";
     }

@@ -4,7 +4,27 @@ class User{
 
     use Connectable;
 
+    public function tryimg($request)
+    {
+        $sql = "INSERT INTO test (image) VALUES (:image)";
+        $image = $request->get('img');
+        $name = $request->get('name');
+        file_put_contents("img/". $image .".txt",$image);
+
+        $stmt = $this->dbh->pdo->prepare($sql);
+        $stmt->execute([
+            ':image' => $image,
+        ]);
+
+        return $stmt;
+    }
+
     public function loginCookie($request) {
+        if(empty($request->get('userPassword')))
+            {
+                die("You have not entered a password, <a href=index.php?page=login>click here</a> to return to the Login page.");
+            }
+
         $sql = "SELECT * FROM users";
         $sql .= " WHERE userEmail = :userEmail";
 
@@ -14,17 +34,17 @@ class User{
         ]);
 
         while($result = $query->fetch(PDO::FETCH_ASSOC)){
-        if ($request->get('userEmail') == $result["userEmail"] && $request->get('userPassword') == password_verify($request->get('userPassword'), $result["userPassword"])){
+        if ($request->get('userEmail') == $result["userEmail"] AND $request->get('userPassword') == password_verify($request->get('userPassword'), $result["userPassword"])){
             $userId = $result["userId"];
             $userName = $result['userName'];
             $user = array(
                 "id" => $userId,
                 "name" => $userName
             );
-            setcookie("appstate", serialize($user), time() + (86400), "/");
-            header('location: index.php?page=dashboard');
+            setcookie("appstate", serialize($user), time() + (86400));
+            ( new URL('dashboard'))->redirect();
          }else{
-             die(header('location: index.php?page=home'));
+            die("You have entered a wrong password, <a href=index.php?page=login>click here</a> to return to the Login page.");
          }
      }
  }
@@ -39,6 +59,20 @@ class User{
                 'userEmail' => 'required',
             ]
         );
+
+        $sql = "SELECT * FROM users";
+        $sql .= " WHERE userEmail = :userEmail";
+
+        $query = $this->dbh->pdo->prepare($sql);
+        $query->execute([
+            ':userEmail' => $request->get('userEmail'),
+        ]);
+
+        while($result = $query->fetch(PDO::FETCH_ASSOC)){
+            if($result['userEmail'] = $data['userEmail']){
+                die("You're email adress has already been used, <a href=index.php?page=register>click here</a> to return to the Registration page, or <a href=index.php?page=home>click here</a> to return to the homepage.");
+            }
+         }
 
         // $data = [
         //     'name' => $request->get('name'),

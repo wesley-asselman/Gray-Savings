@@ -1,4 +1,4 @@
-<!DOCTYPE HTML>
+<!DOCTYPE html>
     <html>
         <head>
             <!-- Latest compiled and minified CSS -->

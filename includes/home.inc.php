@@ -1,5 +1,6 @@
 <h1>Homepage</h1>
-<div class="container off-white">
+<div class="col-sm-12 off-white">
+    <h3>The Fizzbuzz challenge</h3>
     <?php
         $i = 1;
 

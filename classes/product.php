@@ -59,7 +59,6 @@ class Product implements ResourceInterface
                 'userId' => 'required',
             ]
         );
-
         // $data = [
         //     'name' => $request->get('name'),
         //     'title' => $request->get('title'),

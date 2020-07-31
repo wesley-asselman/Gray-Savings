@@ -1,7 +1,11 @@
 <h3>Add plan</h3>
+    <?php
+        $cookie = new ReadCookie;
+        $cookiedata = $cookie->read();
+    ?>
     <form action="Routes.php" method="post">
     <input type="hidden" value="products" name="action">
-    <input type="hidden" value="<?php echo $data['id']?>" name="userId">
+    <input type="hidden" value="<?php echo $cookiedata['id']?>" name="userId">
         <div class="form-group">
             <label>Product Name</label>
             <input class="form-control" placeholder="Name" type="text" id="productName" name="productName" required><br>
@@ -12,7 +16,7 @@
         </div>
         <div class="form-group">
             <label>Product Price</label>
-            <input class="form-control" placeholder="Price" type="text" id="productPrice" name="productPrice" required><Br>
+            <input class="form-control" placeholder="Price" type="number" id="productPrice" name="productPrice" required><Br>
         </div>
         <div class="form-group">
             <label>Product Image</label>

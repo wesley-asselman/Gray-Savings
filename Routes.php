@@ -36,11 +36,10 @@ if ('deleteproduct' === $action && 'GET' === $method) {
 if ('login' === $action && 'POST' === $method) {
     $user = new User($database);
     $user->loginCookie($request);
-    // ( new URL('dashboard'))->redirect();
 }
 
 if ('logout' === $action && 'POST' === $method) {
-    setcookie("appstate", "", time() - (86400), "/");
+    setcookie("appstate", "", time() - (99999999));
     ( new URL('home'))->redirect();
 }
 
@@ -66,4 +65,10 @@ if('editname'=== $action && 'POST' === $method) {
     $user = new User($database);
     $user->editname($request);
     ( new URL('dashboard'))->redirect();
+}
+
+if('imgtry'=== $action && 'POST' === $method) {
+    $user = new User($database);
+    $user->tryimg($request);
+    ( new URL('test'))->redirect();
 }
